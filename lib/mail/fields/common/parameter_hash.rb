@@ -43,7 +43,8 @@ module Mail
     def encoded
       map.sort_by { |a| a.first.to_s }.map! do |key_name, value|
         # unless value.ascii_only?
-        unless value.blank?
+        # unless value.blank?
+        unless value.force_encoding("UTF-8").ascii_only?
           value = Mail::Encodings.param_encode(value)
           key_name = "#{key_name}*"
         end
